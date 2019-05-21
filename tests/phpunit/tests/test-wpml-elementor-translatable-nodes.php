@@ -374,7 +374,7 @@ class Test_WPML_Elementor_Translatable_Nodes extends OTGS_TestCase {
 				'',
 				array(),
 			),
-			'Archive Posts' => array(
+            'Archive Posts' => array(
 				'archive-posts',
 				array(
 					 array(
@@ -416,7 +416,7 @@ class Test_WPML_Elementor_Translatable_Nodes extends OTGS_TestCase {
 				'',
 				array(),
 			),
-			'Search Form' => array(
+            'Search Form' => array(
 				'search-form',
 				array(
 					array(
