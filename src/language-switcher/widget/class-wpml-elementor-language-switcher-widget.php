@@ -3,7 +3,7 @@ namespace WPML\PB\Elementor\LanguageSwitcher;
 
 use Elementor\Controls_Manager;
 
-class LanguageSwitcherWidget extends \Elementor\Widget_Base {
+class Widget extends \Elementor\Widget_Base {
 
 	public function get_name() {
 		return 'wpml-language-switcher';
@@ -14,7 +14,7 @@ class LanguageSwitcherWidget extends \Elementor\Widget_Base {
 	}
 
 	public function get_icon() {
-		return 'fa fa-flag';
+		return 'fa fa-globe';
 	}
 
 	public function get_categories() {
@@ -117,6 +117,34 @@ class LanguageSwitcherWidget extends \Elementor\Widget_Base {
 
 	protected function render() {
 		$settings = $this->get_settings_for_display();
+
+		$languages = apply_filters('wpml_active_languages', NULL, array('skip_missing' => $settings['skip_missing']));
+
+		/* Assuming $settings['style'] = 'dropdown' for testing purpose.
+		Using WPML CSS classes names instead of writing custom CSS from scratch?! */
+
+		$this->add_render_attribute(
+			'wpml-ls',
+			[
+				'class' => ['wpml-ls wpml-ls-legacy-dropdown js-wpml-ls-legacy-dropdown '],
+			]
+		);
+
+		if (!empty($languages)) {
+
+			echo '<div ' . $this->get_render_attribute_string('wpml-ls') . '><ul>';
+
+			foreach ($languages as $language) {
+
+				echo ($language['active']) ? '<li tabindex="0" class="wpml-ls-current-language wpml-ls-item-legacy-dropdown wpml-ls-item">' : '<li class="wpml-ls-item">';
+				echo ($language['active']) ? '<a href="' . $language['url'] . '" class="js-wpml-ls-item-toggle wpml-ls-item-toggle">' : '<a href="' . $language['url'] . '" class="wpml-ls-link">';
+				echo $settings['native_language_name'] ? '<span class="wpml-ls-native">' . $language['native_name'] . '</span>' : '';
+				echo '</a>';
+
+				echo '</li>';
+			}
+			echo '</ul></div>';
+		}
 
 	}
 }
